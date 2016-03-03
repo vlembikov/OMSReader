@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
 #
 
+
 from smartcard.System import readers
+from smartcard.scard import *
+import smartcard.util
 import json
 
 def bcd_to_int(bcd):
@@ -48,12 +51,28 @@ def read_tag(data, *tags):
     print zn1
     return (zn1)
 
+answer = {}.fromkeys(['ok', 'msg', 'data'])
+
 # --- подключаемся к риделу ---
 r = readers()
-reader = r[0]
+try:
+    reader = r[0]
+except IndexError:
+    answer['ok'] = 0
+    answer['msg'] = u'Подключите считыватель'
+    print answer['msg']
+    raise SystemExit
+    
 connection = reader.createConnection()
-connection.connect()
+try:
+    connection.connect()
+except smartcard.Exceptions.CardConnectionException:
+    answer['ok'] = 0
+    answer['msg'] = u'Проверьте карту'
+    print answer['msg']
+    raise SystemExit
 
+answer = {}.fromkeys(['ok', 'msg', 'data'])
 # --- выбираем неизменяемые данные --- 
 SELECT_DIR_CONST =  [0x00, 0xa4, 0x04, 0x0c, 0x07, 0x46, 0x4f, 0x4d, 0x53, 0x5f, 0x49, 0x44]
 SELECT_FILE_CONST = [0x00, 0xa4, 0x02, 0x0c, 0x02, 0x02, 0x01]
@@ -61,11 +80,17 @@ READ_FILE_CONST = [0x00, 0xb0, 0x00, 0x00, 0x00]
 data, sw1, sw2 = connection.transmit(SELECT_DIR_CONST)
 # --- далее проверяется тип карты ---
 if sw1 != 144 and sw2 != 0:
+    answer['ok'] = 0
+    if sw1 == 0x6a:
+        answer['msg'] = u'Карта не поддерживается'
+        print answer['msg']
+    else:
+        answer['msg'] = u'Неизвестная ошибка'
+        print answer['msg']
     raise SystemExit
 
 data, sw1, sw2 = connection.transmit(SELECT_FILE_CONST)
 data_const, sw1, sw2 = connection.transmit(READ_FILE_CONST)
-
 # --- выбираем изменяемые данные --- 
 SELECT_DIR_CHANGE =  [0x00, 0xa4, 0x04, 0x0c, 0x07, 0x46, 0x4f, 0x4d, 0x53, 0x5f, 0x49, 0x4e, 0x53]
 READ_DIR_CHANGE = [0x00, 0xca, 0x01, 0xb0, 0x02] # данная команда позволяет определить файл с актуальной информацией
@@ -105,4 +130,8 @@ dict_data = {
 
 #print read_tag(data_const, 0x5f, 0x26)
 print "Печать дампа: "
-print json.dumps(dict_data, sort_keys=True)
+#print json.dumps(dict_data, sort_keys=True)
+answer['ok'] = 1
+answer['msg'] = u'Успешно'
+answer['data'] = json.dumps(dict_data)
+print answer
