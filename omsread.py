@@ -129,9 +129,11 @@ dict_data = {
     }
 
 #print read_tag(data_const, 0x5f, 0x26)
-print "Печать дампа: "
+
 #print json.dumps(dict_data, sort_keys=True)
 answer['ok'] = 1
 answer['msg'] = u'Успешно'
-answer['data'] = json.dumps(dict_data)
-print answer
+answer['data'] = dict_data 
+print "Печать дампа: "
+print json.dumps(answer, sort_keys=True)
+#print answer
