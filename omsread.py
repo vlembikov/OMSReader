@@ -74,6 +74,9 @@ def read_tag(data, *tags):
 def read_data(args = None):
     if args is None:
         args = ['pol_ser', 'pol_num', 'policy', 'family', 'name', 'patr', 'sex', 'bdate']
+    if type(args) is str:
+        s = args
+        args = s.split(", ")
     dict_data = {}.fromkeys(args)
     answer = {'ok': 0, 'msg': "Неизвестная ошибка в программе", 'data': dict_data}
     r = readers()
