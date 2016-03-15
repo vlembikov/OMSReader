@@ -7,7 +7,6 @@ import json
 import re
 
 DATA_KEYS = {
-    'pol_ser': None,
     'pol_num': '5f26',
     'policy': '5f26',
     'family': '5f21',
@@ -75,9 +74,9 @@ def read_tag(data, *tags):
 def read_data(args = None):
     if args is None or args =='null':
         args = ['pol_ser', 'pol_num', 'policy', 'family', 'name', 'patr', 'sex', 'bdate']
-    dict_data = {}.fromkeys(args)
-    answer = {'ok': 0, 'msg': "Неизвестная ошибка в программе", 'data': dict_data}
-    r = readers()
+        dict_data = {}.fromkeys(args)
+        answer = {'ok': 0, 'msg': "Неизвестная ошибка в программе", 'data': dict_data}
+        r = readers()
     # --- проверка, подключен считыватель или нет ---
     try:
         reader = r[0] # --- подключаемся к риделу ---
@@ -121,24 +120,13 @@ def read_data(args = None):
     data = data_const + data_change
     # --- По поданным на вход функции ключам заполняем словарь данными--- 
     # --- Соответствие ключ - пара тэгов хранится в словаре DATA_KEYS
-    try:
-        for key in dict_data:
-            if key == 'pol_ser':
-                dict_data[key] = None
-                continue
-            param_str = DATA_KEYS[key]
-            param1 = int(param_str[:2],16)
-            param2 = int(param_str[2:4],16)
-            dict_data[key] = read_tag(data, param1, param2)
-    except KeyError:
-        answer['ok'] = 0
-        answer['msg'] = u'Поля %s нет на карте. Проверьте запрос' % key
-        return answer
-    except Exception as inst:
-        print type(inst)
-        answer['ok'] = 0
-        answer['msg'] = u'Пока не знаем, что это'
-        return answer
+    for key in dict_data:
+        param_str = DATA_KEYS.get(key)
+        if param_str is None:
+            continue
+        param1 = int(param_str[:2],16)
+        param2 = int(param_str[2:4],16)
+        dict_data[key] = read_tag(data, param1, param2)
     answer['ok'] = 1
     answer['msg'] = u'Успешно'
     answer['data'] = dict_data 
