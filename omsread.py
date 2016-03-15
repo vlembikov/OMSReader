@@ -5,6 +5,7 @@ from smartcard.System import readers
 from smartcard.scard import *
 import smartcard.util
 import json
+import re
 
 DATA_KEYS = {
     'pol_ser': None,
@@ -27,7 +28,7 @@ DATA_KEYS = {
     'okato': '5f52',
     'data_start_insurance': '5f53',
     'data_end_insurance': '5f54',
-    'ecp':'5f61'
+    #'ecp':'5f61'
     }
 
 def bcd_to_int(bcd):
@@ -76,7 +77,8 @@ def read_data(args = None):
         args = ['pol_ser', 'pol_num', 'policy', 'family', 'name', 'patr', 'sex', 'bdate']
     if type(args) is str:
         s = args
-        args = s.split(", ")
+        args = re.findall(r'[a-z]+_{0,1}[a-z]*_{0,1}[a-z]*',s)
+        #args = s.split(", ")
     dict_data = {}.fromkeys(args)
     answer = {'ok': 0, 'msg': "Неизвестная ошибка в программе", 'data': dict_data}
     r = readers()
@@ -123,7 +125,7 @@ def read_data(args = None):
             answer['ok'] = 0
             answer['msg'] = u'Проверьте карту'
         except KeyError:     
-            answer['msg'] = u'Тип ошибки KeyError'
+            answer['msg'] = u'Поля нет на карте. Проверьте запрос'
         except Exception as inst:
             print type(inst)
             answer['msg'] = u'Пока не знаем, что это'
