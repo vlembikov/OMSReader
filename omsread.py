@@ -72,7 +72,7 @@ def read_tag(data, *tags):
     return (zn1)
 
 def read_data(args = None):
-    if args is None:
+    if args is None or args =='null':
         args = ['pol_ser', 'pol_num', 'policy', 'family', 'name', 'patr', 'sex', 'bdate']
     if type(args) is str:
         s = args
