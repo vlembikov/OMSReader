@@ -72,13 +72,13 @@ def read_tag(data, *tags):
 
 # --- функция принимает в качестве аргументов список ---
 def read_data(args = None):
-    if args is None or args =='null':
+    if args is None or args ==[]:
         args = ['pol_ser', 'pol_num', 'policy', 'family', 'name', 'patr', 'sex', 'bdate']
-        dict_data = {}.fromkeys(args)
-        answer = {'ok': 0, 'msg': "Неизвестная ошибка в программе", 'data': dict_data}
-        r = readers()
+    dict_data = {}.fromkeys(args)
+    answer = {'ok': 0, 'msg': "Неизвестная ошибка в программе", 'data': dict_data}
     # --- проверка, подключен считыватель или нет ---
     try:
+        r = readers()
         reader = r[0] # --- подключаемся к риделу ---
         connection = reader.createConnection()
     except IndexError:
