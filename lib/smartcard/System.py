@@ -39,13 +39,13 @@ def readers(groups=[]):
     r=smartcard.readers(['SCard$DefaultReaders', 'MyReaderGroup'])
     """
 
-    return smartcard.reader.ReaderFactory.ReaderFactory.readers(groups)
+    return lib.smartcard.reader.ReaderFactory.ReaderFactory.readers(groups)
 
 
 def readergroups():
     """Returns the list of reader groups."""
 
-    return smartcard.pcsc.PCSCReaderGroups.PCSCReaderGroups().instance
+    return lib.smartcard.pcsc.PCSCReaderGroups.PCSCReaderGroups().instance
 
 
 # for legacy only
