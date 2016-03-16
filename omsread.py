@@ -6,6 +6,7 @@ import smartcard.util
 import json
 import re
 
+# --- Возможные поля возвращаемого пакета --- 
 DATA_KEYS = {
     'pol_num': '5f26',
     'policy': '5f26',
@@ -28,7 +29,15 @@ DATA_KEYS = {
     'data_end_insurance': '5f54',
     #'ecp':'5f61'
     }
-
+# --- выбор неизменяемых данных --- 
+SELECT_DIR_CONST =  [0x00, 0xa4, 0x04, 0x0c, 0x07, 0x46, 0x4f, 0x4d, 0x53, 0x5f, 0x49, 0x44]
+SELECT_FILE_CONST = [0x00, 0xa4, 0x02, 0x0c, 0x02, 0x02, 0x01]
+READ_FILE_CONST = [0x00, 0xb0, 0x00, 0x00, 0x00]
+# --- выбор изменяемых данных --- 
+SELECT_DIR_CHANGE =  [0x00, 0xa4, 0x04, 0x0c, 0x07, 0x46, 0x4f, 0x4d, 0x53, 0x5f, 0x49, 0x4e, 0x53]
+READ_DIR_CHANGE = [0x00, 0xca, 0x01, 0xb0, 0x02]  # данная команда позволяет определить файл с актуальной информацией
+SELECT_FILE_CHANGE = [0x00, 0xa4, 0x02, 0x0c, 0x02] # имя нужного файла передается в двух байтах, которые добавятся в конец списка уже в программе.
+READ_FILE_CHANGE = [0x00, 0xb0, 0x00, 0x00, 0x00]
 def bcd_to_int(bcd):
     """Decode a 2x4bit BCD to a integer.
     """
@@ -71,9 +80,8 @@ def read_tag(data, *tags):
     return (zn1)
 
 # --- функция принимает в качестве аргументов список ---
-def read_data(args = None):
-    if args is None or args ==[]:
-        args = ['pol_ser', 'pol_num', 'policy', 'family', 'name', 'patr', 'sex', 'bdate']
+def read_data(args):
+    args = args or ['pol_ser', 'pol_num', 'policy', 'family', 'name', 'patr', 'sex', 'bdate']
     dict_data = {}.fromkeys(args)
     answer = {'ok': 0, 'msg': "Неизвестная ошибка в программе", 'data': dict_data}
     # --- проверка, подключен считыватель или нет ---
@@ -91,10 +99,6 @@ def read_data(args = None):
         answer['ok'] = 0
         answer['msg'] = u'Проверьте карту'
         return answer
-    # --- выбираем неизменяемые данные --- 
-    SELECT_DIR_CONST =  [0x00, 0xa4, 0x04, 0x0c, 0x07, 0x46, 0x4f, 0x4d, 0x53, 0x5f, 0x49, 0x44]
-    SELECT_FILE_CONST = [0x00, 0xa4, 0x02, 0x0c, 0x02, 0x02, 0x01]
-    READ_FILE_CONST = [0x00, 0xb0, 0x00, 0x00, 0x00]
     data, sw1, sw2 = connection.transmit(SELECT_DIR_CONST)
     # --- далее проверяется тип карты ---
     if sw1 != 144 and sw2 != 0:
@@ -106,16 +110,11 @@ def read_data(args = None):
         return answer
     data, sw1, sw2 = connection.transmit(SELECT_FILE_CONST)
     data_const, sw1, sw2 = connection.transmit(READ_FILE_CONST) # Поток неизменяемых данных хранится в data_const
-    # --- выбираем изменяемые данные --- 
-    SELECT_DIR_CHANGE =  [0x00, 0xa4, 0x04, 0x0c, 0x07, 0x46, 0x4f, 0x4d, 0x53, 0x5f, 0x49, 0x4e, 0x53]
-    READ_DIR_CHANGE = [0x00, 0xca, 0x01, 0xb0, 0x02]  # данная команда позволяет определить файл с актуальной информацией
     data, sw1, sw2 = connection.transmit(SELECT_DIR_CHANGE)
     data, sw1, sw2 = connection.transmit(READ_DIR_CHANGE) 
-    SELECT_FILE_CHANGE = [0x00, 0xa4, 0x02, 0x0c, 0x02] # имя нужного файла передается в двух байтах, которые мы добавляем в конец списка
     SELECT_FILE_CHANGE.append(data[0])
     SELECT_FILE_CHANGE.append(data[1]) 
     data, sw1, sw2 = connection.transmit(SELECT_FILE_CHANGE)
-    READ_FILE_CHANGE = [0x00, 0xb0, 0x00, 0x00, 0x00]
     data_change, sw1, sw2 = connection.transmit(READ_FILE_CHANGE) # Поток изменяемых данных хранится в data_change
     data = data_const + data_change
     # --- По поданным на вход функции ключам заполняем словарь данными--- 
