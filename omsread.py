@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 #
-from smartcard.System import readers
-from smartcard.scard import *
-import smartcard.util
+from lib.smartcard.System import readers
+from lib.smartcard.scard import *
+import lib.smartcard.util
 import json
 import re
 
