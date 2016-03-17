@@ -10,8 +10,8 @@
 """
 import copy
 from functools import update_wrapper
-from lib.werkzeug.wsgi import ClosingIterator
-from lib.werkzeug._compat import PY2, implements_bool
+from werkzeug.wsgi import ClosingIterator
+from werkzeug._compat import PY2, implements_bool
 
 # since each thread has its own greenlet we can just use those as identifiers
 # for the context.  If greenlets are not available we fall back to the

@@ -23,7 +23,7 @@
 from functools import update_wrapper
 from datetime import datetime, timedelta
 
-from lib.werkzeug.http import HTTP_STATUS_CODES, \
+from werkzeug.http import HTTP_STATUS_CODES, \
     parse_accept_header, parse_cache_control_header, parse_etags, \
     parse_date, generate_etag, is_resource_modified, unquote_etag, \
     quote_etag, parse_set_header, parse_authorization_header, \
@@ -31,19 +31,19 @@ from lib.werkzeug.http import HTTP_STATUS_CODES, \
     parse_options_header, dump_options_header, http_date, \
     parse_if_range_header, parse_cookie, dump_cookie, \
     parse_range_header, parse_content_range_header, dump_header
-from lib.werkzeug.urls import url_decode, iri_to_uri, url_join
-from lib.werkzeug.formparser import FormDataParser, default_stream_factory
-from lib.werkzeug.utils import cached_property, environ_property, \
+from werkzeug.urls import url_decode, iri_to_uri, url_join
+from werkzeug.formparser import FormDataParser, default_stream_factory
+from werkzeug.utils import cached_property, environ_property, \
     header_property, get_content_type
-from lib.werkzeug.wsgi import get_current_url, get_host, \
+from werkzeug.wsgi import get_current_url, get_host, \
     ClosingIterator, get_input_stream, get_content_length
-from lib.werkzeug.datastructures import MultiDict, CombinedMultiDict, Headers, \
+from werkzeug.datastructures import MultiDict, CombinedMultiDict, Headers, \
     EnvironHeaders, ImmutableMultiDict, ImmutableTypeConversionDict, \
     ImmutableList, MIMEAccept, CharsetAccept, LanguageAccept, \
     ResponseCacheControl, RequestCacheControl, CallbackDict, \
     ContentRange, iter_multi_items
-from lib.werkzeug._internal import _get_environ
-from lib.werkzeug._compat import to_bytes, string_types, text_type, \
+from werkzeug._internal import _get_environ
+from werkzeug._compat import to_bytes, string_types, text_type, \
     integer_types, wsgi_decoding_dance, wsgi_get_bytes, \
     to_unicode, to_native, BytesIO
 
@@ -53,7 +53,7 @@ def _run_wsgi_app(*args):
     imported unless required.  DO NOT USE!
     """
     global _run_wsgi_app
-    from lib.werkzeug.test import run_wsgi_app as _run_wsgi_app
+    from werkzeug.test import run_wsgi_app as _run_wsgi_app
     return _run_wsgi_app(*args)
 
 
@@ -257,7 +257,7 @@ class BaseRequest(object):
 
         :return: request object
         """
-        from lib.werkzeug.test import EnvironBuilder
+        from werkzeug.test import EnvironBuilder
         charset = kwargs.pop('charset', cls.charset)
         kwargs['charset'] = charset
         builder = EnvironBuilder(*args, **kwargs)

@@ -1,8 +1,10 @@
-from lib.werkzeug.wrappers import Request, Response
 import json
 import sys
+import os
 import argparse
 from omsread import read_data
+sys.path.insert(0, os.path.join(sys.path[0], 'lib'))
+from werkzeug.wrappers import Request, Response
 
 def createParser ():
     parser = argparse.ArgumentParser()

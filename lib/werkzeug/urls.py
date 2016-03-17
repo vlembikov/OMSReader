@@ -17,12 +17,12 @@
 """
 import os
 import re
-from lib.werkzeug._compat import text_type, PY2, to_unicode, \
+from werkzeug._compat import text_type, PY2, to_unicode, \
     to_native, implements_to_string, try_coerce_native, \
     normalize_string_tuple, make_literal_wrapper, \
     fix_tuple_repr
-from lib.werkzeug._internal import _encode_idna, _decode_idna
-from lib.werkzeug.datastructures import MultiDict, iter_multi_items
+from werkzeug._internal import _encode_idna, _decode_idna
+from werkzeug.datastructures import MultiDict, iter_multi_items
 from collections import namedtuple
 
 
@@ -761,7 +761,7 @@ def url_decode_stream(stream, charset='utf-8', decode_keys=False,
                             and an iterator over all decoded pairs is
                             returned
     """
-    from lib.werkzeug.wsgi import make_chunk_iter
+    from werkzeug.wsgi import make_chunk_iter
     if return_iterator:
         cls = lambda x: x
     elif cls is None:

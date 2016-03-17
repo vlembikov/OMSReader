@@ -103,16 +103,15 @@ import posixpath
 from pprint import pformat
 from threading import Lock
 
-from lib.werkzeug.urls import url_encode, url_quote, url_join
-from lib.werkzeug.utils import redirect, format_string
-from lib.werkzeug.exceptions import HTTPException, NotFound, MethodNotAllowed, \
+from werkzeug.urls import url_encode, url_quote, url_join
+from werkzeug.utils import redirect, format_string
+from werkzeug.exceptions import HTTPException, NotFound, MethodNotAllowed, \
      BadHost
-from lib.werkzeug._internal import _get_environ, _encode_idna
-from lib.werkzeug._compat import itervalues, iteritems, to_unicode, to_bytes, \
+from werkzeug._internal import _get_environ, _encode_idna
+from werkzeug._compat import itervalues, iteritems, to_unicode, to_bytes, \
     text_type, string_types, native_string_result, \
     implements_to_string, wsgi_decoding_dance
-from lib.werkzeug.datastructures import ImmutableDict, MultiDict
-from lib.werkzeug.utils import cached_property
+from werkzeug.datastructures import ImmutableDict, MultiDict
 
 
 _rule_re = re.compile(r'''
@@ -250,7 +249,6 @@ class RequestAliasRedirect(RoutingException):
         self.matched_values = matched_values
 
 
-@implements_to_string
 class BuildError(RoutingException, LookupError):
 
     """Raised if the build system cannot find a URL for an endpoint with the
@@ -262,14 +260,10 @@ class BuildError(RoutingException, LookupError):
         self.endpoint = endpoint
         self.values = values
         self.method = method
-        self.adapter = adapter
-
-    @cached_property
-    def suggested(self):
-        return self.closest_rule(self.adapter)
+        self.suggested = self.closest_rule(adapter)
 
     def closest_rule(self, adapter):
-        def _score_rule(rule):
+        def score_rule(rule):
             return sum([
                 0.98 * difflib.SequenceMatcher(
                     None, rule.endpoint, self.endpoint
@@ -279,20 +273,22 @@ class BuildError(RoutingException, LookupError):
             ])
 
         if adapter and adapter.map._rules:
-            return max(adapter.map._rules, key=_score_rule)
+            return max(adapter.map._rules, key=score_rule)
+        else:
+            return None
 
     def __str__(self):
         message = []
-        message.append('Could not build url for endpoint %r' % self.endpoint)
+        message.append("Could not build url for endpoint %r" % self.endpoint)
         if self.method:
-            message.append(' (%r)' % self.method)
+            message.append(" (%r)" % self.method)
         if self.values:
-            message.append(' with values %r' % sorted(self.values.keys()))
-        message.append('.')
+            message.append(" with values %r" % sorted(self.values.keys()))
+        message.append(".")
         if self.suggested:
             if self.endpoint == self.suggested.endpoint:
                 if self.method and self.method not in self.suggested.methods:
-                    message.append(' Did you mean to use methods %r?' % sorted(
+                    message.append(" Did you mean to use methods %r?" % sorted(
                         self.suggested.methods
                     ))
                 missing_values = self.suggested.arguments.union(
@@ -300,14 +296,14 @@ class BuildError(RoutingException, LookupError):
                 ) - set(self.values.keys())
                 if missing_values:
                     message.append(
-                        ' Did you forget to specify values %r?' %
+                        " Did you forget to specify values %r?" %
                         sorted(missing_values)
                     )
             else:
                 message.append(
-                    ' Did you mean %r instead?' % self.suggested.endpoint
+                    " Did you mean %r instead?" % self.suggested.endpoint
                 )
-        return u''.join(message)
+        return "".join(message)
 
 
 class ValidationError(ValueError):

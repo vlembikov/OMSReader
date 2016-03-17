@@ -61,14 +61,14 @@ import sys
 
 # Because of bootstrapping reasons we need to manually patch ourselves
 # onto our parent module.
-import lib.werkzeug
+import werkzeug
 werkzeug.exceptions = sys.modules[__name__]
 
-from lib.werkzeug._internal import _get_environ
-from lib.werkzeug._compat import iteritems, integer_types, text_type, \
+from werkzeug._internal import _get_environ
+from werkzeug._compat import iteritems, integer_types, text_type, \
     implements_to_string
 
-from lib.werkzeug.wrappers import Response
+from werkzeug.wrappers import Response
 
 
 @implements_to_string
@@ -515,19 +515,6 @@ class RequestHeaderFieldsTooLarge(HTTPException):
     )
 
 
-class UnavailableForLegalReasons(HTTPException):
-
-    """*451* `Unavailable For Legal Reasons`
-
-    This status code indicates that the server is denying access to the
-    resource as a consequence of a legal demand.
-    """
-    code = 451
-    description = (
-        'Unavailable for legal reasons.'
-    )
-
-
 class InternalServerError(HTTPException):
 
     """*500* `Internal Server Error`
@@ -667,5 +654,5 @@ BadRequestKeyError = BadRequest.wrap(KeyError)
 
 
 # imported here because of circular dependencies of werkzeug.utils
-from lib.werkzeug.utils import escape
-from lib.werkzeug.http import HTTP_STATUS_CODES
+from werkzeug.utils import escape
+from werkzeug.http import HTTP_STATUS_CODES

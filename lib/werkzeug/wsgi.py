@@ -18,13 +18,13 @@ from time import time, mktime
 from datetime import datetime
 from functools import partial, update_wrapper
 
-from lib.werkzeug._compat import iteritems, text_type, string_types, \
+from werkzeug._compat import iteritems, text_type, string_types, \
     implements_iterator, make_literal_wrapper, to_unicode, to_bytes, \
     wsgi_get_bytes, try_coerce_native, PY2
-from lib.werkzeug._internal import _empty_stream, _encode_idna
-from lib.werkzeug.http import is_resource_modified, http_date
-from lib.werkzeug.urls import uri_to_iri, url_quote, url_parse, url_join
-from lib.werkzeug.filesystem import get_filesystem_encoding
+from werkzeug._internal import _empty_stream, _encode_idna
+from werkzeug.http import is_resource_modified, http_date
+from werkzeug.urls import uri_to_iri, url_quote, url_parse, url_join
+from werkzeug.filesystem import get_filesystem_encoding
 
 
 def responder(f):
@@ -45,7 +45,7 @@ def get_current_url(environ, root_only=False, strip_querystring=False,
     """A handy helper function that recreates the full URL as IRI for the
     current request or parts of it.  Here an example:
 
-    >>> from lib.werkzeug.test import create_environ
+    >>> from werkzeug.test import create_environ
     >>> env = create_environ("/?param=foo", "http://localhost/script")
     >>> get_current_url(env)
     'http://localhost/script/?param=foo'
@@ -158,7 +158,7 @@ def get_host(environ, trusted_hosts=None):
             rv += ':' + environ['SERVER_PORT']
     if trusted_hosts is not None:
         if not host_is_trusted(rv, trusted_hosts):
-            from lib.werkzeug.exceptions import SecurityError
+            from werkzeug.exceptions import SecurityError
             raise SecurityError('Host "%s" is not trusted' % rv)
     return rv
 

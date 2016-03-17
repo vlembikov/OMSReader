@@ -11,10 +11,10 @@
 """
 import os
 import sys
-import lib.werkzeug
+import werkzeug
 from textwrap import wrap
-from lib.werkzeug.wrappers import BaseRequest as Request, BaseResponse as Response
-from lib.werkzeug.utils import escape
+from werkzeug.wrappers import BaseRequest as Request, BaseResponse as Response
+from werkzeug.utils import escape
 import base64
 
 logo = Response(base64.b64decode('''
@@ -226,5 +226,5 @@ def test_app(environ, start_response):
 
 
 if __name__ == '__main__':
-    from lib.werkzeug.serving import run_simple
+    from werkzeug.serving import run_simple
     run_simple('localhost', 5000, test_app, use_reloader=True)

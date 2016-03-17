@@ -30,9 +30,9 @@ from datetime import datetime, timedelta
 from hashlib import md5
 import base64
 
-from lib.werkzeug._internal import _cookie_quote, _make_cookie_domain, \
+from werkzeug._internal import _cookie_quote, _make_cookie_domain, \
     _cookie_parse_impl
-from lib.werkzeug._compat import to_unicode, iteritems, text_type, \
+from werkzeug._compat import to_unicode, iteritems, text_type, \
     string_types, try_coerce_native, to_bytes, PY2, \
     integer_types
 
@@ -125,7 +125,6 @@ HTTP_STATUS_CODES = {
     429:    'Too Many Requests',
     431:    'Request Header Fields Too Large',
     449:    'Retry With',  # proprietary MS extension
-    451:    'Unavailable For Legal Reasons',
     500:    'Internal Server Error',
     501:    'Not Implemented',
     502:    'Bad Gateway',
@@ -1011,14 +1010,14 @@ def is_byte_range_valid(start, stop, length):
 
 
 # circular dependency fun
-from lib.werkzeug.datastructures import Accept, HeaderSet, ETags, Authorization, \
+from werkzeug.datastructures import Accept, HeaderSet, ETags, Authorization, \
     WWWAuthenticate, TypeConversionDict, IfRange, Range, ContentRange, \
     RequestCacheControl
 
 
 # DEPRECATED
 # backwards compatible imports
-from lib.werkzeug.datastructures import (  # noqa
+from werkzeug.datastructures import (  # noqa
     MIMEAccept, CharsetAccept, LanguageAccept, Headers
 )
-from lib.werkzeug.urls import iri_to_uri
+from werkzeug.urls import iri_to_uri

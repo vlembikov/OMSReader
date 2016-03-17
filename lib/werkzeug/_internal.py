@@ -15,7 +15,7 @@ from weakref import WeakKeyDictionary
 from datetime import datetime, date
 from itertools import chain
 
-from lib.werkzeug._compat import iter_bytes, text_type, BytesIO, int_to_byte, \
+from werkzeug._compat import iter_bytes, text_type, BytesIO, int_to_byte, \
     range_type, integer_types
 
 
@@ -98,11 +98,7 @@ def _parse_signature(func):
         return parse
 
     # inspect the function signature and collect all the information
-    if hasattr(inspect, 'getfullargspec'):
-        tup = inspect.getfullargspec(func)
-    else:
-        tup = inspect.getargspec(func)
-    positional, vararg_var, kwarg_var, defaults = tup[:4]
+    positional, vararg_var, kwarg_var, defaults = inspect.getargspec(func)
     defaults = defaults or ()
     arg_count = len(positional)
     arguments = []

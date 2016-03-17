@@ -25,16 +25,16 @@ try:
 except ImportError:  # Py2
     from cookielib import CookieJar
 
-from lib.werkzeug._compat import iterlists, iteritems, itervalues, to_bytes, \
+from werkzeug._compat import iterlists, iteritems, itervalues, to_bytes, \
     string_types, text_type, reraise, wsgi_encoding_dance, \
     make_literal_wrapper
-from lib.werkzeug._internal import _empty_stream, _get_environ
-from lib.werkzeug.wrappers import BaseRequest
-from lib.werkzeug.urls import url_encode, url_fix, iri_to_uri, url_unquote, \
+from werkzeug._internal import _empty_stream, _get_environ
+from werkzeug.wrappers import BaseRequest
+from werkzeug.urls import url_encode, url_fix, iri_to_uri, url_unquote, \
     url_unparse, url_parse
-from lib.werkzeug.wsgi import get_host, get_current_url, ClosingIterator
-from lib.werkzeug.utils import dump_cookie
-from lib.werkzeug.datastructures import FileMultiDict, MultiDict, \
+from werkzeug.wsgi import get_host, get_current_url, ClosingIterator
+from werkzeug.utils import dump_cookie
+from werkzeug.datastructures import FileMultiDict, MultiDict, \
     CombinedMultiDict, Headers, FileStorage
 
 
