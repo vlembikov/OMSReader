@@ -15,7 +15,7 @@ from weakref import WeakKeyDictionary
 from datetime import datetime, date
 from itertools import chain
 
-from werkzeug._compat import iter_bytes, text_type, BytesIO, int_to_byte, \
+from lib.werkzeug._compat import iter_bytes, text_type, BytesIO, int_to_byte, \
     range_type, integer_types
 
 

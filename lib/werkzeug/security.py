@@ -18,7 +18,7 @@ from random import SystemRandom
 from operator import xor
 from itertools import starmap
 
-from werkzeug._compat import range_type, PY2, text_type, izip, to_bytes, \
+from lib.werkzeug._compat import range_type, PY2, text_type, izip, to_bytes, \
     string_types, to_native
 
 

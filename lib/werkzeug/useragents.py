@@ -192,4 +192,4 @@ class UserAgent(object):
 # it afterwards.  The class itself has the module set to this module so
 # pickle, inspect and similar modules treat the object as if it was really
 # implemented here.
-from werkzeug.wrappers import UserAgentMixin  # noqa
+from lib.werkzeug.wrappers import UserAgentMixin  # noqa

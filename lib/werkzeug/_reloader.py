@@ -5,8 +5,8 @@ import subprocess
 import threading
 from itertools import chain
 
-from werkzeug._internal import _log
-from werkzeug._compat import PY2, iteritems, text_type
+from lib.werkzeug._internal import _log
+from lib.werkzeug._compat import PY2, iteritems, text_type
 
 
 def _iter_module_files():

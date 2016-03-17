@@ -14,11 +14,11 @@ import mimetypes
 from copy import deepcopy
 from itertools import repeat
 
-from werkzeug._internal import _missing, _empty_stream
-from werkzeug._compat import iterkeys, itervalues, iteritems, iterlists, \
+from lib.werkzeug._internal import _missing, _empty_stream
+from lib.werkzeug._compat import iterkeys, itervalues, iteritems, iterlists, \
     PY2, text_type, integer_types, string_types, make_literal_wrapper, \
     to_native
-from werkzeug.filesystem import get_filesystem_encoding
+from lib.werkzeug.filesystem import get_filesystem_encoding
 
 
 _locale_delim_re = re.compile(r'[_-]')
@@ -2684,7 +2684,7 @@ class FileStorage(object):
 
 
 # circular dependencies
-from werkzeug.http import dump_options_header, dump_header, generate_etag, \
+from lib.werkzeug.http import dump_options_header, dump_header, generate_etag, \
     quote_header_value, parse_set_header, unquote_etag, quote_etag, \
     parse_options_header, http_date, is_byte_range_valid
-from werkzeug import exceptions
+from lib.werkzeug import exceptions

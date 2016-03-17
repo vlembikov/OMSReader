@@ -69,11 +69,11 @@ except ImportError:
     from http.server import HTTPServer, BaseHTTPRequestHandler
 
 # important: do not use relative imports here or python -m will break
-import werkzeug
-from werkzeug._internal import _log
-from werkzeug._compat import PY2, reraise, wsgi_encoding_dance
-from werkzeug.urls import url_parse, url_unquote
-from werkzeug.exceptions import InternalServerError
+import lib.werkzeug
+from lib.werkzeug._internal import _log
+from lib.werkzeug._compat import PY2, reraise, wsgi_encoding_dance
+from lib.werkzeug.urls import url_parse, url_unquote
+from lib.werkzeug.exceptions import InternalServerError
 
 
 LISTEN_QUEUE = 128
@@ -196,7 +196,7 @@ class WSGIRequestHandler(BaseHTTPRequestHandler, object):
         except Exception:
             if self.server.passthrough_errors:
                 raise
-            from werkzeug.debug.tbtools import get_current_traceback
+            from lib.werkzeug.debug.tbtools import get_current_traceback
             traceback = get_current_traceback(ignore_system_exceptions=True)
             try:
                 # if we haven't yet sent the headers but they are set
@@ -626,10 +626,10 @@ def run_simple(hostname, port, application, use_reloader=False,
                         to disable SSL (which is the default).
     """
     if use_debugger:
-        from werkzeug.debug import DebuggedApplication
+        from lib.werkzeug.debug import DebuggedApplication
         application = DebuggedApplication(application, use_evalex)
     if static_files:
-        from werkzeug.wsgi import SharedDataMiddleware
+        from lib.werkzeug.wsgi import SharedDataMiddleware
         application = SharedDataMiddleware(application, static_files)
 
     def log_startup(sock):
@@ -703,7 +703,7 @@ def main():
 
     # in contrast to argparse, this works at least under Python < 2.7
     import optparse
-    from werkzeug.utils import import_string
+    from lib.werkzeug.utils import import_string
 
     parser = optparse.OptionParser(
         usage='Usage: %prog [options] app_module:app_object')

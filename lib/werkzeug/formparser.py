@@ -16,12 +16,12 @@ from tempfile import TemporaryFile
 from itertools import chain, repeat, tee
 from functools import update_wrapper
 
-from werkzeug._compat import to_native, text_type
-from werkzeug.urls import url_decode_stream
-from werkzeug.wsgi import make_line_iter, \
+from lib.werkzeug._compat import to_native, text_type
+from lib.werkzeug.urls import url_decode_stream
+from lib.werkzeug.wsgi import make_line_iter, \
     get_input_stream, get_content_length
-from werkzeug.datastructures import Headers, FileStorage, MultiDict
-from werkzeug.http import parse_options_header
+from lib.werkzeug.datastructures import Headers, FileStorage, MultiDict
+from lib.werkzeug.http import parse_options_header
 
 
 #: an iterator that yields empty strings
@@ -522,4 +522,4 @@ class MultiPartParser(object):
         return self.cls(form), self.cls(files)
 
 
-from werkzeug import exceptions
+from lib.werkzeug import exceptions

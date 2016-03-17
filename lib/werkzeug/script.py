@@ -77,7 +77,7 @@ import inspect
 import getopt
 from warnings import warn
 from os.path import basename
-from werkzeug._compat import iteritems
+from lib.werkzeug._compat import iteritems
 
 
 argument_types = {
@@ -322,7 +322,7 @@ def make_runserver(app_factory, hostname='localhost', port=5000,
                reloader=use_reloader, debugger=use_debugger,
                evalex=use_evalex, threaded=threaded, processes=processes):
         """Start a new development server."""
-        from werkzeug.serving import run_simple
+        from lib.werkzeug.serving import run_simple
         app = app_factory()
         run_simple(hostname, port, app,
                    use_reloader=reloader, use_debugger=debugger,

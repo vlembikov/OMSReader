@@ -17,7 +17,7 @@
 from types import ModuleType
 import sys
 
-from werkzeug._compat import iteritems
+from lib.werkzeug._compat import iteritems
 
 # the version.  Usually set automatically by a script.
 __version__ = '0.12-dev'

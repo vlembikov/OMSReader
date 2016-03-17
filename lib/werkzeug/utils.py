@@ -19,9 +19,9 @@ try:
 except ImportError:
     from htmlentitydefs import name2codepoint
 
-from werkzeug._compat import unichr, text_type, string_types, iteritems, \
+from lib.werkzeug._compat import unichr, text_type, string_types, iteritems, \
     reraise, PY2
-from werkzeug._internal import _DictAccessorProperty, \
+from lib.werkzeug._internal import _DictAccessorProperty, \
     _parse_signature, _missing
 
 
@@ -362,13 +362,13 @@ def redirect(location, code=302, Response=None):
         unspecified.
     """
     if Response is None:
-        from werkzeug.wrappers import Response
+        from lib.werkzeug.wrappers import Response
 
     display_location = escape(location)
     if isinstance(location, text_type):
         # Safe conversion is necessary here as we might redirect
         # to a broken URI scheme (for instance itms-services).
-        from werkzeug.urls import iri_to_uri
+        from lib.werkzeug.urls import iri_to_uri
         location = iri_to_uri(location, safe_conversion=True)
     response = Response(
         '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">\n'
@@ -623,6 +623,6 @@ class ImportStringError(ImportError):
 # DEPRECATED
 # these objects were previously in this module as well.  we import
 # them here for backwards compatibility with old pickles.
-from werkzeug.datastructures import (  # noqa
+from lib.werkzeug.datastructures import (  # noqa
     MultiDict, CombinedMultiDict, Headers, EnvironHeaders)
-from werkzeug.http import parse_cookie, dump_cookie  # noqa
+from lib.werkzeug.http import parse_cookie, dump_cookie  # noqa

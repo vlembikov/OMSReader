@@ -30,9 +30,9 @@ from datetime import datetime, timedelta
 from hashlib import md5
 import base64
 
-from werkzeug._internal import _cookie_quote, _make_cookie_domain, \
+from lib.werkzeug._internal import _cookie_quote, _make_cookie_domain, \
     _cookie_parse_impl
-from werkzeug._compat import to_unicode, iteritems, text_type, \
+from lib.werkzeug._compat import to_unicode, iteritems, text_type, \
     string_types, try_coerce_native, to_bytes, PY2, \
     integer_types
 
@@ -1011,14 +1011,14 @@ def is_byte_range_valid(start, stop, length):
 
 
 # circular dependency fun
-from werkzeug.datastructures import Accept, HeaderSet, ETags, Authorization, \
+from lib.werkzeug.datastructures import Accept, HeaderSet, ETags, Authorization, \
     WWWAuthenticate, TypeConversionDict, IfRange, Range, ContentRange, \
     RequestCacheControl
 
 
 # DEPRECATED
 # backwards compatible imports
-from werkzeug.datastructures import (  # noqa
+from lib.werkzeug.datastructures import (  # noqa
     MIMEAccept, CharsetAccept, LanguageAccept, Headers
 )
-from werkzeug.urls import iri_to_uri
+from lib.werkzeug.urls import iri_to_uri

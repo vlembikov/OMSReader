@@ -103,16 +103,16 @@ import posixpath
 from pprint import pformat
 from threading import Lock
 
-from werkzeug.urls import url_encode, url_quote, url_join
-from werkzeug.utils import redirect, format_string
-from werkzeug.exceptions import HTTPException, NotFound, MethodNotAllowed, \
+from lib.werkzeug.urls import url_encode, url_quote, url_join
+from lib.werkzeug.utils import redirect, format_string
+from lib.werkzeug.exceptions import HTTPException, NotFound, MethodNotAllowed, \
      BadHost
-from werkzeug._internal import _get_environ, _encode_idna
-from werkzeug._compat import itervalues, iteritems, to_unicode, to_bytes, \
+from lib.werkzeug._internal import _get_environ, _encode_idna
+from lib.werkzeug._compat import itervalues, iteritems, to_unicode, to_bytes, \
     text_type, string_types, native_string_result, \
     implements_to_string, wsgi_decoding_dance
-from werkzeug.datastructures import ImmutableDict, MultiDict
-from werkzeug.utils import cached_property
+from lib.werkzeug.datastructures import ImmutableDict, MultiDict
+from lib.werkzeug.utils import cached_property
 
 
 _rule_re = re.compile(r'''
