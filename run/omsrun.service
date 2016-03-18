@@ -1,0 +1,9 @@
+[Unit]
+Description=Start of OMS Card Reader
+
+[Service]
+Type=simple
+ExecStart=/home/lr131p/web/proj/OMSReader/run/omsrun.sh
+
+[Install]
+WantedBy=multi-user.target
