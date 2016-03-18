@@ -2,8 +2,9 @@
 Description=Start of OMS Card Reader
 
 [Service]
-Type=simple
-ExecStart=/home/lr131p/web/proj/OMSReader/run/omsrun.sh
+Type=forking
+ExecStart= /usr/bin/sh /usr/bin/omsrun.sh
+KillMode=process
 
 [Install]
 WantedBy=multi-user.target
