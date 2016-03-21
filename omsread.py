@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 from lib.smartcard.System import readers
-from lib.smartcard.scard import *
+from lib.smartcard.scard import scard
 import lib.smartcard.util
 import json
 import re
@@ -92,10 +92,11 @@ def read_data(args):
     except IndexError:
         answer['ok'] = 0
         answer['msg'] = u'Подключите считыватель'
+        return answer
     # --- проверка, карты: если карта без чипа, не той стороной или отсутствует, вызовется исключение ---
     try:
         connection.connect()
-    except smartcard.Exceptions.CardConnectionException:
+    except lib.smartcard.Exceptions.CardConnectionException:
         answer['ok'] = 0
         answer['msg'] = u'Проверьте карту'
         return answer

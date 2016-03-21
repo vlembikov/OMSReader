@@ -10,7 +10,7 @@ from werkzeug.wrappers import Request, Response
 
 def createParser ():
     parser = argparse.ArgumentParser()
-    parser.add_argument ('-p', '--port', default=8000)
+    parser.add_argument ('-p', '--port', default=5050)
     return parser
 
 def application(environ, start_response):
