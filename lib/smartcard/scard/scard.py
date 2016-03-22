@@ -129,7 +129,7 @@ if version_info >= (2,6,0):
     _scard = swig_import_helper()
     del swig_import_helper
 else:
-    import lib._scard
+    import _scard
 del version_info
 try:
     _swig_property = property
