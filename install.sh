@@ -15,3 +15,5 @@ $DIRECTORY/lib/smartcard/build_so.sh
 
 systemctl daemon-reload
 systemctl enable omsrun.service
+
+echo "installing finished. Restart you system"
