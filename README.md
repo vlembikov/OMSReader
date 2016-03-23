@@ -2,7 +2,7 @@
 
 > Файл постоянно обновляется в соответствие с вносимыми изменениями в программу.
 
-### Version от 18.03.2016
+### Version от 23.03.2016
 ## Описание
 
 Программа  считывает с карты ОМС данные и формирует из них пакет json. 
@@ -11,48 +11,21 @@
 
 Для запуска приложения потребуется:
 
-* [OpenSuse 42.1] - Приложение тестируется на версиях 42.1 и 13.1
-* [Python 2.7]
-> ***Важно!*** На OpenSuse для пакетов ACR 38 следует использовать не официальный репозиторий, а репозиторий ```security:chipcard```. Разница в версиях и в файлах библиотеки PCSC.
+* [Python] версии 2.7 и выше (совместим с 3)
+* OS Linux
+> ***Важно!*** На [OpenSuse] для пакетов ACR 38 следует использовать не официальный репозиторий, а репозиторий ```security:chipcard```. Разница в версиях и в файлах библиотеки PCSC.
 * [PCSC-ACR38] - Драйвер для  ACR 38 smart card reader фирмы ACS. Официальный релиз использует библиотеку  PCSC-Lite .
-* [Library for PC/SC IFD Handler] - Драйвер для  ACR 38 smart card reader фирмы ACS. 
+* [Library for PC/SC IFD Handler] - Библиотека-обертка для драйвера ACR 38 smart card reader фирмы ACS. 
 
 Библиотеки [pyscard] и [Werkzeug] идут вместе с приложением и не требуют установки. Для [Werkzeug] используется версия 0.11.4, для [pyscard] - 1.9.
 
 ## Установка и настройка: 
 
-Для автозапуска приложения необходимо от `root`'a в консоли выполнить следующие команды:
-```sh
-$ ln -s /<путь_до_папки>/OMSReader/omsserv.py /usr/bin/omsserv.py
-```
-```
-и
-```sh
-$ ln -s /<путь_до_папки>/OMSReader/run/omsrun.sh /usr/bin/omsrun.sh
-```
-```
-Файл `omsrun.service` необходимо скопировать в /etc/systemd/system/ . Действие выполняется от `root`. 
+> ***Определите порт!*** По умолчанию установлен порт 5050. Если нужен другой, то после скачивания зайдите в папку `run` и добавьте в строку `python /usr/bin/omsserv.py -p 8080`, где `8080` - нужный порт.
 
-После чего в консоли в режиме суперпользователя перезагружаем демонов и запускаем приложение:
-```sh
-$  systemctl daemon-reload
-$  systemctl enable omsrun.service
-$  systemctl start omsrun.service
-```
-Альтернативный запуск:   
-```sh
-$ python omsserv.py 
-```
-По умолчанию порт 8000. Чтобы изменить порт, необходимо запустить сервер с параметрами -p или --port. 
-Для этого в файле `omsrun.sh` добавьте параметры запуска в строчку
+Для того, чтобы сервер запускался при старте компьютера, необходимо запустить скрипт install.sh с правами администратора. Скрипт находится в корневой папке приложения.
 
-`python /usr/bin/omsserv.py -p 5050`
-
-[Альтернативны вариант ] Запуск в консоли:
-
-```sh
-$ python omsserv.py -p 5050
-```
+Старт ручками: `python /usr/bin/omsserv.py`
 
 ## Принцип работы:
  - считывание данных происходит каждый раз, когда сервер получает запрос
@@ -93,7 +66,7 @@ $ python omsserv.py -p 5050
 
 
    [OpenSuse 42.1]: <http://software.opensuse.org/421/en>
-   [Python 2.7]: <https://www.python.org/download/releases/2.7/>
+   [Python]: <https://www.python.org/>
    [PCSC-ACR38]: <http://software.opensuse.org/package/pcsc-acr38>
    [Library for PC/SC IFD Handler]: <http://software.opensuse.org/package/libacr38ucontrol0>
    [pyscard]: <https://sourceforge.net/projects/pyscard/>
