@@ -3,7 +3,7 @@ Description=Start of OMS Card Reader
 
 [Service]
 Type=forking
-ExecStart= /usr/bin/sh /usr/bin/omsrun.sh
+ExecStart= /usr/bin/python /usr/bin/omsserv.py 
 KillMode=process
 
 [Install]
