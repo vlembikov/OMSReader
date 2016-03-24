@@ -16,6 +16,7 @@
 > ***Важно!*** На [OpenSuse] для пакетов ACR 38 следует использовать не официальный репозиторий, а репозиторий ```security:chipcard```. Разница в версиях и в файлах библиотеки PCSC.
 * [PCSC-ACR38] - Драйвер для  ACR 38 smart card reader фирмы ACS. Официальный релиз использует библиотеку  PCSC-Lite .
 * [Library for PC/SC IFD Handler] - Библиотека-обертка для драйвера ACR 38 smart card reader фирмы ACS. 
+* [PCSC-Lite-devel] и [Swig] - для сборки библиотеки [pyscard]
 
 Библиотеки [pyscard] и [Werkzeug] идут вместе с приложением и не требуют установки. Для [Werkzeug] используется версия 0.11.4, для [pyscard] - 1.9.
 
@@ -72,3 +73,5 @@
    [pyscard]: <https://sourceforge.net/projects/pyscard/>
    [python-pyscard]: <http://software.opensuse.org/package/python-pyscard>
    [Werkzeug]: <http://werkzeug.pocoo.org/>
+   [Swig]: <http://www.swig.org/>
+   [PCSC-Lite-devel]: <https://pcsclite.alioth.debian.org/>
