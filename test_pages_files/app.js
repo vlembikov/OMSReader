@@ -1,8 +1,9 @@
 $(function(){
     $('#button2').click(function(){
-        var args = $("#args").val();
-        $('body').append('<p>' + args + '<p>');
-        $.getJSON('http://localhost:5050', function(data){
+        var param = $("#args").val();
+//         $('body').append('<p>' + args + '<p>');
+        var tags = {args: param}
+        $.getJSON('http://localhost:5050',  tags, function(data){
             console.log(data);
             var items = [];
             $.each( data.data, function( key, val ) {
