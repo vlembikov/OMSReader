@@ -15,8 +15,9 @@
 * OS Linux
 > ***Важно!*** На [OpenSuse] для пакетов ACR 38 следует использовать не официальный репозиторий, а репозиторий ```security:chipcard```. Разница в версиях и в файлах библиотеки PCSC.
 * [PCSC-ACR38] - Драйвер для  ACR 38 smart card reader фирмы ACS. Официальный релиз использует библиотеку  PCSC-Lite .
-* [Library for PC/SC IFD Handler] - Библиотека-обертка для драйвера ACR 38 smart card reader фирмы ACS. 
+<!-- * [Library for PC/SC IFD Handler] - Библиотека-обертка для драйвера ACR 38 smart card reader фирмы ACS.  -->
 * [PCSC-Lite-devel] и [Swig] - для сборки библиотеки [pyscard]
+* [PCSC-CCID] - PCSC Driver for CCID Based Smart Card Readers and GemPC Twin Serial Reader. Эта библиотека позволяет принять данные с картридера.
 
 Библиотеки [pyscard] и [Werkzeug] идут вместе с приложением и не требуют установки. Для [Werkzeug] используется версия 0.11.4, для [pyscard] - 1.9.
 
@@ -66,7 +67,6 @@
 - `read_data(args = None)` - функция принимает на вход список необходимых полей и возвращает данные, считанные с ОМС карты, которые соответствуют этим полям. Если список пуст, то по умолчанию вернет значения полей `pol_ser, pol_num, policy, family, name, patr, sex, bdate`.
 
 
-   [OpenSuse 42.1]: <http://software.opensuse.org/421/en>
    [Python]: <https://www.python.org/>
    [PCSC-ACR38]: <http://software.opensuse.org/package/pcsc-acr38>
    [Library for PC/SC IFD Handler]: <http://software.opensuse.org/package/libacr38ucontrol0>
