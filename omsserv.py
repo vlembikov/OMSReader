@@ -18,7 +18,7 @@ def application(environ, start_response):
     args = list(filter(bool, request.args.get('args', '').split(',')))
     data = json.dumps(read_data(args))
     response = Response(data, mimetype='application/json')
-    response.headers['Access-Control-Allow-Origin'] = 'null'
+    response.headers['Access-Control-Allow-Origin'] = '*'
     response.headers['Access-Control-Allow-Credentials'] = 'true'
     return response(environ, start_response)
 
