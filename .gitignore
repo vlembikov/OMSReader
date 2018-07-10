@@ -2,6 +2,7 @@ $ cat .gitignore
 *.pyc
 *.so
 *.o
+.directory
 scard_wrap.c
 __pycache__
 *~
