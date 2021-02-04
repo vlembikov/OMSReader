@@ -88,6 +88,9 @@ def read_data(args):
     try:
         r = readers()
         reader = r[0] # --- подключаемся к риделу ---
+        for readto in r:
+            if (str(readto).find('ACR') !=0) or (str(readto).find('ACS') !=0):
+                reader = readto
         connection = reader.createConnection()
     except IndexError:
         answer['ok'] = 0
