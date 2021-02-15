@@ -92,30 +92,30 @@ def read_data(args):
         selRead = str(reader)
         for readto in r:
             retRead = retRead + ', ' + str(readto)
-            if ((str(readto).find('ACR') !=0) or (str(readto).find('ACS') !=0)) and (str(readto).find('00 01') ==0) and (str(readto).find('00 02') ==0) and (str(readto)!=''):
+            if ((str(readto).find('ACR') !=-1) or (str(readto).find('ACS') !=-1)) and (str(readto).find('00 01') ==-1) and (str(readto).find('00 02') ==-1) and (str(readto)!=''):
                 reader = readto
                 selRead = str(readto)
         #reader = r[0] # --- подключаемся к риделу ---
         connection = reader.createConnection()
     except IndexError:
         answer['ok'] = 0
-        answer['msg'] = u'Подключите считыватель'+' '+selRead
+        answer['msg'] = u'Подключите считыватель'+' '+retRead
         return answer
     # --- проверка, карты: если карта без чипа, не той стороной или отсутствует, вызовется исключение ---
     try:
         connection.connect()
     except lib.smartcard.Exceptions.CardConnectionException:
         answer['ok'] = 0
-        answer['msg'] = u'Проверьте карту'+ ' '+selRead
+        answer['msg'] = u'Проверьте карту'+ ' '+retRead
         return answer
     data, sw1, sw2 = connection.transmit(SELECT_DIR_CONST)
     # --- далее проверяется тип карты ---
     if sw1 != 144 and sw2 != 0:
         answer['ok'] = 0
         if sw1 == 0x6a:
-            answer['msg'] = u'Карта не поддерживается'+ ' '+selRead
+            answer['msg'] = u'Карта не поддерживается'+ ' '+retRead
         else:
-            answer['msg'] = u'Неизвестная ошибка'+ ' '+selRead
+            answer['msg'] = u'Неизвестная ошибка'+ ' '+retRead
         return answer
     data, sw1, sw2 = connection.transmit(SELECT_FILE_CONST)
     data_const, sw1, sw2 = connection.transmit(READ_FILE_CONST) # Поток неизменяемых данных хранится в data_const
@@ -136,6 +136,6 @@ def read_data(args):
         param2 = int(param_str[2:4],16)
         dict_data[key] = read_tag(data, param1, param2)
     answer['ok'] = 1
-    answer['msg'] = u'Успешно'+ ' '+retRead
+    answer['msg'] = u'Успешно'
     answer['data'] = dict_data 
     return answer
